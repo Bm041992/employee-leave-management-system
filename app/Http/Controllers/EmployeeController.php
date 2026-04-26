@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -90,6 +91,7 @@ class EmployeeController extends Controller
     
         if($employee->delete())
         {
+            LeaveRequest::where('employee_id', $id)->delete();
             return response()->json(['success'=> true, 'message' => 'Employee deleted successfully.']);
         }
         return response()->json(['success'=> false, 'message' => 'Failed to delete employee.']);
